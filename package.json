@@ -20,6 +20,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "markdown": "^0.5.0",
+    "markdown-it": "^13.0.1"
   }
 }
