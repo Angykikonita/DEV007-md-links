@@ -3,6 +3,7 @@ const fs = require('fs');
 const colors = require('colors');
 const MarkdownIt = require('markdown-it');
 const cheerio = require('cheerio');
+const request = require('request');
 
 const mdlinks = (pathUser) => {
  return new Promise((resolve, reject) => {
@@ -11,6 +12,8 @@ const mdlinks = (pathUser) => {
     let mDFounds;
     let mdToHtml;
     let md;
+    let url;
+    let body;
 
     if(fs.existsSync(pathUser)){
         console.log("El archivo EXISTE!".bgGreen);
@@ -27,9 +30,15 @@ const mdlinks = (pathUser) => {
             mDFounds = fs.readFileSync(absolutePath,{ encoding: 'utf8', flag: 'r' } );
             md = new MarkdownIt();
             mdToHtml = md.render(mDFounds);
-            console.log(mdToHtml);
-            
+            console.log(mdToHtml.blue);
+            url = mdToHtml;
+            const $ = cheerio.load(url);
+                 $('a').each((index, element) => {
+                    const link = $(element).attr('href');
+                    console.log(link.green);
+                  });
         }
+        
 
         else{ 
             console.log("no contiene archivos .md" .bgRed);
