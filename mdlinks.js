@@ -13,7 +13,6 @@ const mdlinks = (pathUser) => {
     let mdToHtml;
     let md;
     let url;
-    let body;
 
     if(fs.existsSync(pathUser)){
         console.log("El archivo EXISTE!".bgGreen);
@@ -32,11 +31,26 @@ const mdlinks = (pathUser) => {
             mdToHtml = md.render(mDFounds);
             console.log(mdToHtml.blue);
             url = mdToHtml;
+
+            const links = []
             const $ = cheerio.load(url);
                  $('a').each((index, element) => {
                     const link = $(element).attr('href');
-                    console.log(link.green);
+                    if (link[0] !== '#') {
+                        const text = $(element).text();
+                        const objeto = {
+                            link:link,
+                            text:text,
+                        };
+                    links.push(objeto);    
+                    }
+
                   });
+
+
+            console.log(links);  
+
+
         }
         
 
